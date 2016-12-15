@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/esf.iml" filepath="$PROJECT_DIR$/esf.iml" />
+      <module fileurl="file://$PROJECT_DIR$/esf-common/esf-common.iml" filepath="$PROJECT_DIR$/esf-common/esf-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/esf-remoting/esf-remoting.iml" filepath="$PROJECT_DIR$/esf-remoting/esf-remoting.iml" />
+      <module fileurl="file://$PROJECT_DIR$/esf-remoting-netty/esf-remoting-netty.iml" filepath="$PROJECT_DIR$/esf-remoting-netty/esf-remoting-netty.iml" />
+    </modules>
+  </component>
+</project>
