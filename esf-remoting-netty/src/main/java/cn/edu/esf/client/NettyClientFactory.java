@@ -1,6 +1,8 @@
 package cn.edu.esf.client;
 
 import cn.edu.esf.NettyWorkerThread;
+import cn.edu.esf.encoder.NettyProtocolDecoder;
+import cn.edu.esf.encoder.NettyProtocolEncoder;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
@@ -45,15 +47,15 @@ public class NettyClientFactory extends AbstractClientFactory {
                 .handler(new ChannelInitializer<NioSocketChannel>() {
                     @Override
                     protected void initChannel(NioSocketChannel ch) throws Exception {
-                        ch.pipeline().addLast("decoder", new StringDecoder())
-                                .addLast("encoder", new StringEncoder())
+                        ch.pipeline().addLast("decoder", new NettyProtocolDecoder())
+                                .addLast("encoder", new NettyProtocolEncoder())
                                 .addLast("handler", handler);
                     }
                 });
 
         int connectTimeout = 4000;
 
-         bootstrap.option(ChannelOption.CONNECT_TIMEOUT_MILLIS, connectTimeout);
+        bootstrap.option(ChannelOption.CONNECT_TIMEOUT_MILLIS, connectTimeout);
 
         /**
          * =====================

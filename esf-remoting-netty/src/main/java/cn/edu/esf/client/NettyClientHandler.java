@@ -1,5 +1,6 @@
 package cn.edu.esf.client;
 
+import cn.edu.esf.BaseResponse;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.timeout.IdleStateEvent;
 import io.netty.handler.timeout.IdleStateHandler;
@@ -21,8 +22,11 @@ public class NettyClientHandler extends IdleStateHandler {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-
-        System.out.println(ctx.channel().remoteAddress() + "-->client" + msg);
+        if (msg instanceof BaseResponse) {
+            long requestID = ((BaseResponse) msg).getRequestID();
+            Object response = ((BaseResponse) msg).getResponseObject(null);
+            System.out.println(requestID + "-" + response);
+        }
     }
 
     @Override
