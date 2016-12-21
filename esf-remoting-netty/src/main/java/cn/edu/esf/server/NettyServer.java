@@ -1,6 +1,8 @@
 package cn.edu.esf.server;
 
 import cn.edu.esf.NettyWorkerThread;
+import cn.edu.esf.encoder.NettyProtocolDecoder;
+import cn.edu.esf.encoder.NettyProtocolEncoder;
 import cn.edu.esf.thread.NamedThreadFactory;
 import cn.edu.esf.thread.ThreadNameSpace;
 import io.netty.bootstrap.ServerBootstrap;
@@ -51,8 +53,8 @@ public class NettyServer implements Server {
                 .childHandler(new ChannelInitializer<SocketChannel>() {
                     @Override
                     protected void initChannel(SocketChannel ch) throws Exception {
-                        ch.pipeline().addLast("decoder", new StringDecoder())
-                                .addLast("encoder", new StringEncoder())
+                        ch.pipeline().addLast("decoder", new NettyProtocolDecoder())
+                                .addLast("encoder", new NettyProtocolEncoder())
                                 .addLast("handler", serverHandler);
                     }
                 });
