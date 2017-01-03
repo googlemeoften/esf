@@ -11,14 +11,15 @@ public class SerializeType {
     public static final byte JAVA_SERIALIZE = 1;
     public static final byte HESSION_SERIALIZE = 2;
     public static final byte PROTOBUF_SERIALIZE = 3;
+    public static final byte HESSIAN2_SERIALIZZE = 4;
 
     private static ArrayList<Encoder> encoders = new ArrayList<>();
     private static ArrayList<Decoder> decoders = new ArrayList<>();
 
     static {
-        addDecoder(new JavaDecoder());
-
         addEncoder(new JavaEncoder());
+
+        addDecoder(new JavaDecoder());
     }
 
     public static void addEncoder(Encoder encoder) {
