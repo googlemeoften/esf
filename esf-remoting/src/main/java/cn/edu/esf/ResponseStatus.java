@@ -6,6 +6,9 @@ package cn.edu.esf;
  */
 public enum ResponseStatus {
     OK(20, "SUCCESS"),
+    CLIENT_TIMEOUT(40, "timeout"),
+    CLIENT_ERROR(41," client error"),
+    SERVER_ERROR(50, "server error"),
     UNKNOW_CODE(100, "Unkonw code");
 
     private final byte code;

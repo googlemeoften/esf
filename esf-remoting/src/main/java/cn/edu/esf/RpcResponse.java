@@ -25,21 +25,24 @@ import cn.edu.esf.serialize.SerializeType;
 public class RpcResponse extends BaseResponse {
     private static final byte[] EXTENED_BYTES = new byte[3];
     private final byte[] response;
-//    private final byte codeType;
+    private final byte codeType;
 
-    public RpcResponse(long requestId, byte[] response) {
+    public RpcResponse(long requestId, byte codeType, byte[] response) {
         super(RemotingConstants.PROCOCOL_VERSION_ESF_REMOTING, requestId);
+        this.codeType = codeType;
         this.response = response;
     }
 
-    public RpcResponse(long requestId, ResponseStatus status, byte[] response) {
+    public RpcResponse(long requestId, byte codeType, ResponseStatus status, byte[] response) {
         super(RemotingConstants.PROCOCOL_VERSION_ESF_REMOTING, requestId);
+        this.codeType = codeType;
         this.response = response;
         this.setStatus(status);
     }
 
-    public RpcResponse(long requestId, byte status, byte[] response) {
+    public RpcResponse(long requestId, byte codeType, byte status, byte[] response) {
         super(RemotingConstants.PROCOCOL_VERSION_ESF_REMOTING, requestId);
+        this.codeType = codeType;
         this.response = response;
         this.setStatus(status);
     }
@@ -74,8 +77,9 @@ public class RpcResponse extends BaseResponse {
             case OK:
                 try {
 
-                    Object result = SerializeType.getDecoders(1).decode(this.getResponse());
-                    response.setResponseObject(result);
+//                    Object result = SerializeType.getDecoders(1).decode(this.getResponse());
+//                    response.setResponseObject(result);
+                    response.setResponseObject(new String(this.getResponse(), RemotingConstants.DEFAULT_CHARSET));
                 } catch (Exception e) {
                     response.setErrorMsg("Decoder fialed at client");
                     response.setResponseObject(e);
@@ -85,6 +89,10 @@ public class RpcResponse extends BaseResponse {
                 response.setResponseObject(new String(this.getResponse(), RemotingConstants.DEFAULT_CHARSET));
         }
         return response;
+    }
+
+    public byte getCodeType() {
+        return codeType;
     }
 
     public byte[] getResponse() {

@@ -34,22 +34,23 @@ public class RpcRequest extends BaseRequest {
     private final String[] argTypes;
     private final byte[][] requestObjects;
     private final byte[] requestProps;
-    private final int size;
+    private final byte codecType;
+//    private final int size;
 
     public RpcRequest(int timeout, String targetInstance, String methodName, String[] argTypes,
-                      byte[][] requestObjects, byte[] requestProps, int size) {
-        this(UUIDGenerator.getNextOpaque(), timeout, targetInstance, methodName, argTypes, requestObjects, requestProps, size);
+                      byte[][] requestObjects, byte[] requestProps, byte codecType) {
+        this(UUIDGenerator.getNextOpaque(), timeout, targetInstance, methodName, argTypes, requestObjects, requestProps, codecType);
     }
 
     public RpcRequest(long requestID, int timeout, String targetInstance, String methodName, String[] argTypes,
-                      byte[][] requestObjects, byte[] requestProps, int size) {
+                      byte[][] requestObjects, byte[] requestProps, byte codecType) {
         super(RemotingConstants.PROCOCOL_VERSION_ESF_REMOTING, requestID, timeout);
         this.targetInstance = targetInstance;
         this.methodName = methodName;
         this.argTypes = argTypes;
         this.requestObjects = requestObjects;
         this.requestProps = requestProps;
-        this.size = size;
+        this.codecType = codecType;
     }
 
 
@@ -121,13 +122,11 @@ public class RpcRequest extends BaseRequest {
             wrapper.writeBytes(requestProps);
         }
 
-
-        System.out.println("object has code ......");
     }
 
     @Override
     public BaseResponse createErrorResponse(String errorInfo) {
-        return new RpcResponse(this.getRequestID(), errorInfo.getBytes(RemotingConstants.DEFAULT_CHARSET));
+        return new RpcResponse(this.getRequestID(), codecType, errorInfo.getBytes(RemotingConstants.DEFAULT_CHARSET));
     }
 
     @Override
