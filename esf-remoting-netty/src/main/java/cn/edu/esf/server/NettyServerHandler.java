@@ -47,19 +47,26 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<BaseRequest>
         connection.refreshLastTime(System.currentTimeMillis());
 
         System.out.println(request);
-        //===================
-        RpcRequest msg = (RpcRequest) request;
-        long requestID = request.getRequestID();
-        String targetInstance = msg.getTargetInstance();
-        String methodName = msg.getMethodName();
 
-        ResponseStatus status = ResponseStatus.OK;
-        byte[] bytes = "hello".getBytes();
+        if (request instanceof RpcRequest) {
+            //===================
+            RpcRequest msg = (RpcRequest) request;
+            long requestID = request.getRequestID();
+            String targetInstance = msg.getTargetInstance();
+            String methodName = msg.getMethodName();
 
-        System.out.println(MessageFormat.format("requestID: {0},targetInstance:{1},method:{2}", requestID, targetInstance, methodName));
-        RpcResponse response = new RpcResponse(requestID, status, bytes);
+            ResponseStatus status = ResponseStatus.OK;
+            byte[] bytes = "hello".getBytes();
 
-        //=======================
-        connection.writeResponseToChannel(response);
+            System.out.println(MessageFormat.format("requestID: {0},targetInstance:{1},method:{2}", requestID, targetInstance, methodName));
+            RpcResponse response = new RpcResponse(requestID, (byte) 1, status, bytes);
+
+            //=======================
+            connection.writeResponseToChannel(response);
+        } else {
+            HeartBeatRequest msg = (HeartBeatRequest) request;
+            HeartBeatResponse response = new HeartBeatResponse(msg.getRequestID());
+            connection.writeResponseToChannel(response);
+        }
     }
 }

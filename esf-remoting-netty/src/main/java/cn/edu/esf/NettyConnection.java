@@ -36,7 +36,7 @@ public class NettyConnection implements Connection {
     }
 
     @Override
-    public void writeResponseToChannel(final Object response) {
+    public void writeResponseToChannel(final BaseResponse response) {
         if (response != null) {
             ChannelFuture future = channel.writeAndFlush(response);
             future.addListener(new ChannelFutureListener() {
@@ -45,10 +45,9 @@ public class NettyConnection implements Connection {
                     if (!future.isSuccess()) {
                         LOGGER.warn("Server write Response error ,request id  is :" + response
                                 + ",channel: " + remotingIp + future.cause());
-                    }
-
-                    if (!channel.isActive()) {
-                        channel.close();
+                        if (!channel.isActive()) {
+                            channel.close();
+                        }
                     }
                 }
             });
