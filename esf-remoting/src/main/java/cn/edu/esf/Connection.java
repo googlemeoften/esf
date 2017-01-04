@@ -12,7 +12,7 @@ public interface Connection {
 
     public SocketAddress getRemotingAddress();
 
-    public void writeResponseToChannel(final Object response);
+    public void writeResponseToChannel(final BaseResponse response);
 
     public void refreshLastTime(long lastTime);
 }
