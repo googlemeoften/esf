@@ -3,6 +3,7 @@ package cn.edu.esf.client;
 import cn.edu.esf.*;
 import cn.edu.esf.async.ChannelFutureWrapper;
 import cn.edu.esf.async.ResponseCallBackFuture;
+import cn.edu.esf.utils.StringUtils;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
@@ -58,6 +59,9 @@ public class NettyClient extends AbstractClient {
                 }
 
                 if (!future.isSuccess()) {
+                    if(channel.isActive()){
+                        NettyClient.this.close("request fialed");
+                    }
                     NettyClientFactory.getInstance().remove(channel);
                     errorMsg = "send request error:" + future.cause();
                 }
@@ -90,9 +94,14 @@ public class NettyClient extends AbstractClient {
 
     @Override
     protected void doClose(String cause) {
+        if (cause.trim().length() != 0 && !StringUtils.isBlank(cause)) {
+            LOGGER.warn(cause);
+        }
 
+        if (channel.isActive()) {
+            channel.close();
+        }
     }
-
 
     @Override
     public ClientFactory getClientFactory() {

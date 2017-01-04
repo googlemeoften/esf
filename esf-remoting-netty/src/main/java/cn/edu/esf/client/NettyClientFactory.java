@@ -81,9 +81,13 @@ public class NettyClientFactory extends AbstractClientFactory {
         }
     }
 
-    public void remove(final Channel channel){
-        Client client = channel2Client.get(channel);
-        if(client!=null){
+    public Client getClientByChannel(Channel channel) {
+        return channel2Client.get(channel);
+    }
+
+    public void remove(final Channel channel) {
+        Client client = channel2Client.remove(channel);
+        if (client != null) {
             client.removeAllRequestCallBackWhenClose();
 
         }
