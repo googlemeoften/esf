@@ -25,6 +25,7 @@ public class NettyClientHandler extends IdleStateHandler {
         if (msg instanceof BaseResponse) {
             long requestID = ((BaseResponse) msg).getRequestID();
             Object response = ((BaseResponse) msg).getResponseObject(null);
+
             System.out.println(requestID + "-" + response);
         }
     }

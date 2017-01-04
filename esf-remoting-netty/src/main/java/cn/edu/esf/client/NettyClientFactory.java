@@ -1,6 +1,8 @@
 package cn.edu.esf.client;
 
 import cn.edu.esf.NettyWorkerThread;
+import cn.edu.esf.RemotingURL;
+import cn.edu.esf.constant.TRConstants;
 import cn.edu.esf.encoder.NettyProtocolDecoder;
 import cn.edu.esf.encoder.NettyProtocolEncoder;
 import io.netty.bootstrap.Bootstrap;
@@ -36,7 +38,7 @@ public class NettyClientFactory extends AbstractClientFactory {
     }
 
     @Override
-    public Client createClient(String url) throws Exception {
+    public Client createClient(RemotingURL url) throws Exception {
         final Bootstrap bootstrap = new Bootstrap();
         final NettyClientHandler handler = new NettyClientHandler(this);
         bootstrap.group(NettyWorkerThread.workerGroup)
@@ -53,20 +55,21 @@ public class NettyClientFactory extends AbstractClientFactory {
                     }
                 });
 
-        int connectTimeout = 4000;
+        int connectTimeout = url.getParameter(TRConstants.CONNECT_TIMEOUT_KEY, 4000);
+        if (connectTimeout < 1000) {
+            bootstrap.option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 4000);
+        } else {
+            bootstrap.option(ChannelOption.CONNECT_TIMEOUT_MILLIS, connectTimeout);
+        }
 
-        bootstrap.option(ChannelOption.CONNECT_TIMEOUT_MILLIS, connectTimeout);
 
-        /**
-         * =====================
-         */
-        String targetIp = "127.0.0.1";
-        int targetPort = 8080;
+        String targetIp = url.getHost();
+        int targetPort = url.getPort();
 
         ChannelFuture future = bootstrap.connect(new InetSocketAddress(targetIp, targetPort));
         if (future.awaitUninterruptibly(connectTimeout) && future.isSuccess() && future.channel().isActive()) {
             Channel channel = future.channel();
-            Client client = new NettyClient(channel);
+            Client client = new NettyClient(url, connectTimeout, channel);
             channel2Client.put(channel, client);
             return client;
         } else {
@@ -75,6 +78,14 @@ public class NettyClientFactory extends AbstractClientFactory {
             LOGGER.warn("[remoting] failure to connect:" + targetIp);
             //throw new RemotingUncheckedException(113, targetIP, targetPort + "", connectTimeout + "");
             throw new Exception();
+        }
+    }
+
+    public void remove(final Channel channel){
+        Client client = channel2Client.get(channel);
+        if(client!=null){
+            client.removeAllRequestCallBackWhenClose();
+
         }
     }
 }
