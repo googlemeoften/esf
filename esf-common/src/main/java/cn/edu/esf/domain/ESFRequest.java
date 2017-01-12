@@ -100,6 +100,10 @@ public class ESFRequest implements Serializable {
         return methodKeyBuilder.toString();
     }
 
+    public Map<String, Object> getRequestProps() {
+        return requestProps;
+    }
+
     @Override
     public String toString() {
         return "ESFRequest{" +
