@@ -3,6 +3,7 @@ package cn.edu.esf.client;
 import cn.edu.esf.*;
 import cn.edu.esf.async.ChannelFutureWrapper;
 import cn.edu.esf.async.ResponseCallBackFuture;
+import cn.edu.esf.exception.ESFException;
 import cn.edu.esf.utils.StringUtils;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
@@ -34,7 +35,7 @@ public class NettyClient extends AbstractClient {
     }
 
     @Override
-    public ChannelFutureWrapper sendRequest(final BaseRequest request, final int timeout) throws Exception {
+    public ChannelFutureWrapper sendRequest(final BaseRequest request, final int timeout) throws ESFException {
 
         final long begin = System.currentTimeMillis();
         ChannelFuture future = channel.writeAndFlush(request);
