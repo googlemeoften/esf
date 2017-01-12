@@ -126,7 +126,7 @@ public class RPCProtocol implements Protocol {
             argTypesString[i] = ThreadLocalCache.getString(argTypes[i]);
         }
         return new RpcRequest(requestID, timeout, ThreadLocalCache.getString(targetInstanceBytes),
-                ThreadLocalCache.getString(methodNameBytes), argTypesString, args, requestPropsBytes, 0);
+                ThreadLocalCache.getString(methodNameBytes), argTypesString, args, requestPropsBytes, codecType);
     }
 
     /**
