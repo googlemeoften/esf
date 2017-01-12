@@ -1,5 +1,6 @@
 package cn.edu.esf.remoting;
 
+import cn.edu.esf.RemotingURL;
 import cn.edu.esf.domain.ESFRequest;
 import cn.edu.esf.exception.ESFException;
 import cn.edu.esf.model.ServiceMetadata;
@@ -22,5 +23,5 @@ public interface InvokeService {
      * @return
      * @throws ESFException
      */
-    public Object invoke(ESFRequest request, ServiceMetadata metadata, String targetURL, byte codecType, int timeout) throws ESFException;
+    public Object invoke(ESFRequest request, ServiceMetadata metadata, RemotingURL targetURL, byte codecType, int timeout) throws ESFException;
 }
