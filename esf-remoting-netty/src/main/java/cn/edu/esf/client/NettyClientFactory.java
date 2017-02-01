@@ -5,6 +5,7 @@ import cn.edu.esf.RemotingURL;
 import cn.edu.esf.constant.TRConstants;
 import cn.edu.esf.encoder.NettyProtocolDecoder;
 import cn.edu.esf.encoder.NettyProtocolEncoder;
+import cn.edu.esf.exception.ESFException;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
@@ -38,7 +39,7 @@ public class NettyClientFactory extends AbstractClientFactory {
     }
 
     @Override
-    public Client createClient(RemotingURL url) throws Exception {
+    public Client createClient(RemotingURL url) throws ESFException {
         final Bootstrap bootstrap = new Bootstrap();
         final NettyClientHandler handler = new NettyClientHandler(this);
         bootstrap.group(NettyWorkerThread.workerGroup)
@@ -77,7 +78,7 @@ public class NettyClientFactory extends AbstractClientFactory {
             future.channel().close();
             LOGGER.warn("[remoting] failure to connect:" + targetIp);
             //throw new RemotingUncheckedException(113, targetIP, targetPort + "", connectTimeout + "");
-            throw new Exception();
+            throw new ESFException(targetIp+":" + targetPort+connectTimeout);
         }
     }
 
