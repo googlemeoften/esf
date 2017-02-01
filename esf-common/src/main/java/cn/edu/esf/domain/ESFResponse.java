@@ -38,6 +38,10 @@ public class ESFResponse implements Serializable {
         this.errorType = errorType;
     }
 
+    public boolean isError() {
+        return isError;
+    }
+
     @Override
     public String toString() {
         return "ESFResponse{" +
