@@ -5,6 +5,7 @@ import cn.edu.esf.async.ChannelFutureWrapper;
 import cn.edu.esf.async.ResponseCallBackFuture;
 import cn.edu.esf.async.SendCallBackListener;
 import cn.edu.esf.domain.ESFRequest;
+import cn.edu.esf.domain.ESFResponse;
 import cn.edu.esf.exception.ESFException;
 import cn.edu.esf.utils.RemotingUtil;
 import org.slf4j.Logger;
@@ -35,13 +36,14 @@ public abstract class AbstractClient implements Client {
     }
 
     @Override
-    public Object syncInvoke(ESFRequest request, byte codecType, int timeout) throws ESFException {
+    public BaseResponse syncInvoke(ESFRequest request, byte codecType, int timeout) throws ESFException {
         timeout = validateTimeout(timeout);
         RpcRequest wapper = RemotingUtil.convert2RpcRequest(request, codecType, timeout);
         ResponseCallBackFuture responseCallBack = new ResponseCallBackFuture(this, timeout, wapper);
+        responses.put(wapper.getRequestID(), responseCallBack);
         sendRequest(wapper, timeout);
 
-        return responseCallBack.get(timeout, TimeUnit.MILLISECONDS);
+        return (BaseResponse) responseCallBack.get(timeout, TimeUnit.MILLISECONDS);
     }
 
 

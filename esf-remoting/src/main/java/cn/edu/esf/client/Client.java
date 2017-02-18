@@ -28,7 +28,7 @@ public interface Client {
      * @return
      * @throws Exception
      */
-    public Object syncInvoke(ESFRequest request, byte codecType, int timeout) throws ESFException;
+    public BaseResponse syncInvoke(ESFRequest request, byte codecType, int timeout) throws ESFException;
 
     /**
      * future调用
