@@ -12,7 +12,7 @@ public class UUIDGenerator {
     private static AtomicLong opaque = new AtomicLong();
 
     public static final synchronized long getNextOpaque() {
-        return opaque.getAndDecrement();
+        return opaque.incrementAndGet();
     }
 
 }
