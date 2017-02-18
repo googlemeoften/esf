@@ -14,7 +14,7 @@ public class ESFRequest implements Serializable {
     private String serviceName;
     private String methodName;
     private String[] methodArgTypes;
-    private String[] methosArgs;
+    private Object[] methosArgs;
     private Map<String, Object> requestProps;
     private transient byte serializeType;
     private transient Class<?>[] parameterClasses;
@@ -53,11 +53,11 @@ public class ESFRequest implements Serializable {
         this.methodArgTypes = methodArgTypes;
     }
 
-    public String[] getMethosArgs() {
+    public Object[] getMethosArgs() {
         return methosArgs;
     }
 
-    public void setMethosArgs(String[] methosArgs) {
+    public void setMethosArgs(Object[] methosArgs) {
         this.methosArgs = methosArgs;
     }
 
