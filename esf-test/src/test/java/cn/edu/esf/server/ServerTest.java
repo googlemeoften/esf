@@ -6,6 +6,8 @@ package cn.edu.esf.server;
  */
 
 
+import cn.edu.esf.server.NettyServer;
+import cn.edu.esf.server.ProviderProcessor;
 
 /**
  * @Author heyong
@@ -13,7 +15,7 @@ package cn.edu.esf.server;
  */
 public class ServerTest {
     public static void main(String[] args) throws Exception {
-        NettyServer server = new NettyServer("127.0.0.1");
+        NettyServer server = new NettyServer(new ProviderProcessor(),"127.0.0.1");
         server.start(8080);
         //Thread.sleep(1000000);
     }
