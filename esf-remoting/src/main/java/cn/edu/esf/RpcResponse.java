@@ -62,7 +62,7 @@ public class RpcResponse extends BaseResponse {
                 .writeByte(RPCProtocol.RESPONSE)
                 .writeByte(RPCProtocol.VERSION)
                 .writeByte(getStatus().getCode())
-                .writeByte((byte) 0)//序列化方式
+                .writeByte(codeType)//序列化方式
                 .writeBytes(getExtenedBytes())
                 .writeLong(this.getRequestID())
                 .writeInt(bady.length)
@@ -76,10 +76,8 @@ public class RpcResponse extends BaseResponse {
         switch (this.getStatus()) {
             case OK:
                 try {
-
-//                    Object result = SerializeType.getDecoders(1).decode(this.getResponse());
-//                    response.setResponseObject(result);
-                    response.setResponseObject(new String(this.getResponse(), RemotingConstants.DEFAULT_CHARSET));
+                    Object result = SerializeType.getDecoders(codeType).decode(this.getResponse());
+                    response.setResponseObject(result);
                 } catch (Exception e) {
                     response.setErrorMsg("Decoder fialed at client");
                     response.setResponseObject(e);

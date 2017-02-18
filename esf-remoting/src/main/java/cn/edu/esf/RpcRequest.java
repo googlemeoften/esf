@@ -1,8 +1,10 @@
 package cn.edu.esf;
 
 import cn.edu.esf.protocol.ByteBufferWrapper;
+import cn.edu.esf.protocol.ProtocolFactory;
 import cn.edu.esf.protocol.RPCProtocol;
 import cn.edu.esf.server.ProtocolHandler;
+import cn.edu.esf.server.RPCProtocolHandler;
 import cn.edu.esf.utils.ThreadLocalCache;
 import cn.edu.esf.utils.UUIDGenerator;
 
@@ -28,7 +30,8 @@ public class RpcRequest extends BaseRequest {
     /**
      * =================================
      */
-    private final static ProtocolHandler<? extends BaseRequest> protocolHandler = null;
+    private final static ProtocolHandler<? extends BaseRequest> protocolHandler =
+            ProtocolFactory.instance.getServerHandler(RemotingConstants.PROCOCOL_VERSION_ESF_REMOTING);
     private final String targetInstance;
     private final String methodName;
     private final String[] argTypes;
@@ -91,7 +94,7 @@ public class RpcRequest extends BaseRequest {
         wrapper.writeByte(RemotingConstants.PROCOCOL_VERSION_ESF_REMOTING)
                 .writeByte(RPCProtocol.REQUEST)
                 .writeByte(RPCProtocol.VERSION)
-                .writeByte((byte) 0)//序列化版本
+                .writeByte( codecType)//序列化版本
                 .writeBytes(getExtenedBytes())
                 .writeLong(requestID)
                 .writeInt(timeout)
@@ -134,6 +137,7 @@ public class RpcRequest extends BaseRequest {
         return protocolHandler;
     }
 
+
     public String getTargetInstance() {
         return targetInstance;
     }
@@ -153,4 +157,9 @@ public class RpcRequest extends BaseRequest {
     public byte[] getRequestProps() {
         return requestProps;
     }
+
+    public byte getCodecType() {
+        return codecType;
+    }
+
 }

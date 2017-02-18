@@ -2,6 +2,7 @@ package cn.edu.esf;
 
 import cn.edu.esf.protocol.ByteBufferWrapper;
 import cn.edu.esf.protocol.HeartBeatProtocol;
+import cn.edu.esf.protocol.ProtocolFactory;
 import cn.edu.esf.server.ProtocolHandler;
 
 /**
@@ -20,7 +21,8 @@ public class HeartBeatRequest extends BaseRequest {
     /***
      * ==================================
      */
-    private final static ProtocolHandler<? extends BaseRequest> protocolHandler = null;
+    private final static ProtocolHandler<? extends BaseRequest> protocolHandler =
+            ProtocolFactory.instance.getServerHandler(RemotingConstants.PROCOCOL_VERSION_HEATBEAT);
 
     public HeartBeatRequest() {
         super(RemotingConstants.PROCOCOL_VERSION_HEATBEAT);
