@@ -15,4 +15,5 @@ public interface Connection {
     public void writeResponseToChannel(final BaseResponse response);
 
     public void refreshLastTime(long lastTime);
+
 }
