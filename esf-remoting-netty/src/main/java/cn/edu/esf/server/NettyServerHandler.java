@@ -10,8 +10,10 @@ import org.slf4j.LoggerFactory;
 import java.net.InetSocketAddress;
 import java.text.MessageFormat;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executor;
 
 /**
+ * Netty Server Handler
  * @Author heyong
  * @Date 2016/12/14
  */
@@ -21,7 +23,6 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<BaseRequest>
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, BaseRequest request) throws Exception {
-        System.out.println("server get info....");
         handleRequest(ctx, request);
     }
 
@@ -46,27 +47,32 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<BaseRequest>
         NettyConnection connection = channels.get(ctx.channel());
         connection.refreshLastTime(System.currentTimeMillis());
 
-        System.out.println(request);
+        ProtocolHandler handler = request.getProcotolHandler();
+        Executor executor = handler.getExecutor(request);
 
-        if (request instanceof RpcRequest) {
-            //===================
-            RpcRequest msg = (RpcRequest) request;
-            long requestID = request.getRequestID();
-            String targetInstance = msg.getTargetInstance();
-            String methodName = msg.getMethodName();
-
-            ResponseStatus status = ResponseStatus.OK;
-            byte[] bytes = "hello".getBytes();
-
-            System.out.println(MessageFormat.format("requestID: {0},targetInstance:{1},method:{2}", requestID, targetInstance, methodName));
-            RpcResponse response = new RpcResponse(requestID, (byte) 1, status, bytes);
-
-            //=======================
-            connection.writeResponseToChannel(response);
-        } else {
-            HeartBeatRequest msg = (HeartBeatRequest) request;
-            HeartBeatResponse response = new HeartBeatResponse(msg.getRequestID());
-            connection.writeResponseToChannel(response);
+        if(executor == null){
+            handler.handleRequest(request,connection,System.currentTimeMillis());
+        }else {
+            executor.execute(new HandlerRunnable(connection,request,handler));
         }
     }
+
+    private static class HandlerRunnable implements Runnable {
+        private final Connection connection;
+        private final BaseRequest message;
+        private final ProtocolHandler<BaseRequest> serverHandler;
+        private final long dispatchTime = System.currentTimeMillis();
+
+        public HandlerRunnable(Connection conneciton, BaseRequest message, ProtocolHandler<BaseRequest> serverHandler) {
+            this.connection = conneciton;
+            this.message = message;
+            this.serverHandler = serverHandler;
+        }
+
+        public void run() {
+            serverHandler.handleRequest(message, connection, dispatchTime);
+        }
+
+    }
 }
+

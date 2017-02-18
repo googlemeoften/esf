@@ -1,5 +1,7 @@
 package cn.edu.esf;
 
+import cn.edu.esf.domain.ESFResponse;
+import cn.edu.esf.utils.RemotingUtil;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
@@ -58,6 +60,7 @@ public class NettyConnection implements Connection {
     public void refreshLastTime(long lastTime) {
         this.lastReadTime = lastTime;
     }
+
 
     public long getLastReadTime() {
         return lastReadTime;

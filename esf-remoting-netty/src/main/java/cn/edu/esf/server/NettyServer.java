@@ -3,6 +3,7 @@ package cn.edu.esf.server;
 import cn.edu.esf.NettyWorkerThread;
 import cn.edu.esf.encoder.NettyProtocolDecoder;
 import cn.edu.esf.encoder.NettyProtocolEncoder;
+import cn.edu.esf.protocol.ProtocolFactory;
 import cn.edu.esf.thread.NamedThreadFactory;
 import cn.edu.esf.thread.ThreadNameSpace;
 import io.netty.bootstrap.ServerBootstrap;
@@ -33,8 +34,9 @@ public class NettyServer implements Server {
     private final AtomicBoolean startFlag = new AtomicBoolean(false);
     private final String bindHost;
 
-    public NettyServer(String bindHost) {
+    public NettyServer(final RpcRequestProcessor rpcProcessor, final String bindHost) {
         this.bindHost = bindHost;
+        ProtocolFactory.instance.initServerSide(rpcProcessor);
     }
 
     @Override
