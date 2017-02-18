@@ -7,7 +7,7 @@ import cn.edu.esf.client.NettyClientFactory;
 import cn.edu.esf.domain.ESFRequest;
 import cn.edu.esf.domain.ESFResponse;
 import cn.edu.esf.exception.ESFException;
-import cn.edu.esf.model.ServiceMetadata;
+import cn.edu.esf.model.matedata.ServiceMetadata;
 import cn.edu.esf.remoting.InvokeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

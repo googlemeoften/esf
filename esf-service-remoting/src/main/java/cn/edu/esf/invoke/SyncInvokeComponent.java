@@ -3,7 +3,7 @@ package cn.edu.esf.invoke;
 import cn.edu.esf.RemotingURL;
 import cn.edu.esf.domain.ESFRequest;
 import cn.edu.esf.exception.ESFException;
-import cn.edu.esf.model.ServiceMetadata;
+import cn.edu.esf.model.matedata.ServiceMetadata;
 import cn.edu.esf.remoting.InvokeService;
 
 /**
