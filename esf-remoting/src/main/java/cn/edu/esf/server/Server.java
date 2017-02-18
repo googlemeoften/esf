@@ -17,4 +17,6 @@ public interface Server {
      * 关闭
      */
     public void stop();
+
+
 }
