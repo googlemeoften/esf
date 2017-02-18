@@ -30,8 +30,6 @@ public interface ConfigurationService {
 
     public String getESFVersion();
 
-
-
     public void setESFServerMinPoolSize();
 
     public void setESFServerMaxPoolSize();
@@ -40,6 +38,10 @@ public interface ConfigurationService {
 
     public void setRunModel();
 
+    public String getBindAddress();
 
+    public String getPassword();
+
+    public int getThreadPoolQueueSize();
 
 }

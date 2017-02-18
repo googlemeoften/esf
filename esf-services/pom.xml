@@ -14,10 +14,6 @@
     <name>esf-services</name>
     <url>http://maven.apache.org</url>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -27,6 +23,11 @@
         <dependency>
             <groupId>cn.edu.esf</groupId>
             <artifactId>esf-common</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.edu.esf</groupId>
+            <artifactId>esf-remoting</artifactId>
         </dependency>
     </dependencies>
 </project>

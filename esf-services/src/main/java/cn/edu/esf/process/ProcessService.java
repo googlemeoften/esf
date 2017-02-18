@@ -1,7 +1,7 @@
 package cn.edu.esf.process;
 
 import cn.edu.esf.exception.ESFException;
-import cn.edu.esf.model.ServiceMetadata;
+import cn.edu.esf.model.matedata.ServiceMetadata;
 
 /**
  * 服务的发布与服务的消费

@@ -2,7 +2,7 @@ package cn.edu.esf.remoting;
 
 import cn.edu.esf.domain.ESFRequest;
 import cn.edu.esf.exception.ESFException;
-import cn.edu.esf.model.ServiceMetadata;
+import cn.edu.esf.model.matedata.ServiceMetadata;
 
 /**
  * RPC服务协议，负责最后远程调用
@@ -11,7 +11,6 @@ import cn.edu.esf.model.ServiceMetadata;
  * @Date 2017/1/4
  */
 public interface RPCProtocolService {
-
     /**
      * 发起服务的调用
      *

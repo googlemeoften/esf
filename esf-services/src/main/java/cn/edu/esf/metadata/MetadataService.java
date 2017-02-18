@@ -1,6 +1,6 @@
 package cn.edu.esf.metadata;
 
-import cn.edu.esf.model.ServiceMetadata;
+import cn.edu.esf.model.matedata.ServiceMetadata;
 
 /**
  * 服务元数据服务
