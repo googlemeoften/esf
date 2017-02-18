@@ -161,6 +161,6 @@ public class RPCProtocol implements Protocol {
         }
         byte[] body = new byte[bodyLen];
         wrapper.readBytes(body);
-        return new RpcResponse(requestID, status, body);
+        return new RpcResponse(requestID, codecType, status, body);
     }
 }
