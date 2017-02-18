@@ -44,7 +44,7 @@ public class NettyClient extends AbstractClient {
             @Override
             public void operationComplete(ChannelFuture future) throws Exception {
                 if (future.isSuccess()) {
-                    System.out.println("sucess");
+                    //System.out.println("sucess");
                     return;
                 }
 
