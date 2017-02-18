@@ -3,6 +3,7 @@ package cn.edu.esf.async;
 import cn.edu.esf.BaseRequest;
 import cn.edu.esf.BaseResponse;
 import cn.edu.esf.client.Client;
+import cn.edu.esf.exception.ESFException;
 
 import java.util.concurrent.*;
 
@@ -95,16 +96,19 @@ public class ResponseCallBackFuture implements Future<Object> {
 
     @Override
     public Object get(long timeout, TimeUnit unit) {
-        if (timeout > 0) {
-            try {
+        try {
+            if (timeout > 0) {
                 if (!this.countDownLatch.await(timeout, unit)) {
-                } else {
-                    this.countDownLatch.await();
+                    throw new RuntimeException(timeout + "");
                 }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            } else {
+                this.countDownLatch.await();
             }
+        } catch (InterruptedException e) {
+            throw new RuntimeException(timeout + "");
         }
+
+
         return this.response;
     }
 
