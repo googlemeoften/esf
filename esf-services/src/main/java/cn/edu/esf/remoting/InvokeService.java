@@ -11,6 +11,13 @@ import cn.edu.esf.model.matedata.ServiceMetadata;
  */
 public interface InvokeService {
 
+    /**
+     * 服务实现的标识KEY
+     *
+     * 以便调用HSF服务的管理类能寻找到合适的InvokeService实现来完成服务的调用
+     */
+    String getKey();
+
     public static final String INVOKE_REMOTING_SYNC = "SYNC";
 
     /**

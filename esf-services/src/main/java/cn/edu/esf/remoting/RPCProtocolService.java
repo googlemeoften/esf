@@ -4,6 +4,8 @@ import cn.edu.esf.domain.ESFRequest;
 import cn.edu.esf.exception.ESFException;
 import cn.edu.esf.model.matedata.ServiceMetadata;
 
+import java.lang.reflect.Method;
+
 /**
  * RPC服务协议，负责最后远程调用
  *
@@ -11,16 +13,21 @@ import cn.edu.esf.model.matedata.ServiceMetadata;
  * @Date 2017/1/4
  */
 public interface RPCProtocolService {
+
+
     /**
      * 发起服务的调用
-     *
-     * @param request
      * @param metadata
-     * @param targetURL
+     * @param method
+     * @param methodName
+     * @param parameterTypes
+     * @param args
      * @return
      * @throws ESFException
+     * @throws Throwable
      */
-    public Object invoke(ESFRequest request, ServiceMetadata metadata, String targetURL) throws ESFException;
+    public Object invoke(ServiceMetadata metadata, Method method, String methodName,
+                         Class<?>[] parameterTypes, Object[] args) throws ESFException, Throwable;
 
 
     /**
@@ -34,6 +41,7 @@ public interface RPCProtocolService {
 
     /**
      * 验证服务地址是否有效
+     *
      * @param targetURL
      * @return
      */
