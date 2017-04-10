@@ -23,6 +23,7 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<BaseRequest>
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, BaseRequest request) throws Exception {
+        System.out.println("get request from: " + ctx.channel().remoteAddress());
         handleRequest(ctx, request);
     }
 

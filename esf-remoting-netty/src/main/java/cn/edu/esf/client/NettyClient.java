@@ -60,7 +60,7 @@ public class NettyClient extends AbstractClient {
                 }
 
                 if (!future.isSuccess()) {
-                    if(channel.isActive()){
+                    if(!channel.isActive()){
                         NettyClient.this.close("request fialed");
                     }
                     NettyClientFactory.getInstance().remove(channel);

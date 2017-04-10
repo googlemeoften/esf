@@ -15,6 +15,8 @@ public class ThreadNameSpace {
 
     public static final String ESF_REMOTING_TIMER = "ESF-Remoting-Timer";
 
+    public static final String ESF_CONFIG  = "ESF-Config";
+
     public static final String getNettyProcessorService(String serviceName) {
         return "ESF-Biz-Processor-" + serviceName;
     }

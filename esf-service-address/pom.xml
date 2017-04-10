@@ -23,5 +23,10 @@
             <groupId>cn.edu.esf</groupId>
             <artifactId>esf-common</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>cn.edu.esf</groupId>
+            <artifactId>esf-services</artifactId>
+        </dependency>
     </dependencies>
 </project>

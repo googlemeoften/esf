@@ -25,13 +25,30 @@
         <module name="esf-common" />
         <module name="esf-remoting" />
         <module name="esf-remoting-netty" />
+        <module name="esf-service-address" />
+        <module name="esf-service-config" />
+        <module name="esf-service-moniter" />
+        <module name="esf-service-process" />
+        <module name="esf-service-remoting" />
+        <module name="esf-services" />
+        <module name="esf-spring" />
+        <module name="esf-test" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="esf" target="1.7" />
-      <module name="esf-common" target="1.7" />
-      <module name="esf-remoting" target="1.7" />
-      <module name="esf-remoting-netty" target="1.7" />
+      <module name="esf-all" target="1.7" />
+      <module name="esf-common" target="1.5" />
+      <module name="esf-remoting" target="1.5" />
+      <module name="esf-remoting-netty" target="1.5" />
+      <module name="esf-remoting-zookeeper" target="1.7" />
+      <module name="esf-service-address" target="1.5" />
+      <module name="esf-service-config" target="1.5" />
+      <module name="esf-service-moniter" target="1.5" />
+      <module name="esf-service-process" target="1.5" />
+      <module name="esf-service-remoting" target="1.5" />
+      <module name="esf-services" target="1.7" />
+      <module name="esf-spring" target="1.5" />
+      <module name="esf-test" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>

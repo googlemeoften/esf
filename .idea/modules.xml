@@ -2,10 +2,19 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/esf.iml" filepath="$PROJECT_DIR$/esf.iml" />
+      <module fileurl="file://$PROJECT_DIR$/esf-all.iml" filepath="$PROJECT_DIR$/esf-all.iml" />
       <module fileurl="file://$PROJECT_DIR$/esf-common/esf-common.iml" filepath="$PROJECT_DIR$/esf-common/esf-common.iml" />
       <module fileurl="file://$PROJECT_DIR$/esf-remoting/esf-remoting.iml" filepath="$PROJECT_DIR$/esf-remoting/esf-remoting.iml" />
       <module fileurl="file://$PROJECT_DIR$/esf-remoting-netty/esf-remoting-netty.iml" filepath="$PROJECT_DIR$/esf-remoting-netty/esf-remoting-netty.iml" />
+      <module fileurl="file://$PROJECT_DIR$/esf-remoting-zookeeper.iml" filepath="$PROJECT_DIR$/esf-remoting-zookeeper.iml" />
+      <module fileurl="file://$PROJECT_DIR$/esf-service-address/esf-service-address.iml" filepath="$PROJECT_DIR$/esf-service-address/esf-service-address.iml" />
+      <module fileurl="file://$PROJECT_DIR$/esf-service-config/esf-service-config.iml" filepath="$PROJECT_DIR$/esf-service-config/esf-service-config.iml" />
+      <module fileurl="file://$PROJECT_DIR$/esf-service-moniter/esf-service-moniter.iml" filepath="$PROJECT_DIR$/esf-service-moniter/esf-service-moniter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/esf-service-process/esf-service-process.iml" filepath="$PROJECT_DIR$/esf-service-process/esf-service-process.iml" />
+      <module fileurl="file://$PROJECT_DIR$/esf-service-remoting/esf-service-remoting.iml" filepath="$PROJECT_DIR$/esf-service-remoting/esf-service-remoting.iml" />
+      <module fileurl="file://$PROJECT_DIR$/esf-services/esf-services.iml" filepath="$PROJECT_DIR$/esf-services/esf-services.iml" />
+      <module fileurl="file://$PROJECT_DIR$/esf-spring/esf-spring.iml" filepath="$PROJECT_DIR$/esf-spring/esf-spring.iml" />
+      <module fileurl="file://$PROJECT_DIR$/esf-test/esf-test.iml" filepath="$PROJECT_DIR$/esf-test/esf-test.iml" />
     </modules>
   </component>
 </project>

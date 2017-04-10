@@ -23,14 +23,18 @@ import java.util.concurrent.TimeoutException;
  */
 public class FutureInvokeComponent implements InvokeService {
     private static final Logger LOGGER = LoggerFactory.getLogger(FutureInvokeComponent.class);
-    private final ClientFactory clientFactory = NettyClientFactory.getInstance();
+    private static final String INVOKE_REMOTE_FUTURE = "FUTURE";
 
+    @Override
+    public String getKey() {
+        return INVOKE_REMOTE_FUTURE;
+    }
 
     @Override
     public Object invoke(ESFRequest request, ServiceMetadata metadata, RemotingURL targetURL, byte codecType, int timeout) throws ESFException {
         ESFResponse response = null;
         try {
-            Client client = clientFactory.getClient(targetURL);
+            Client client = NettyClientFactory.getInstance().createClient(targetURL);
             Future<Object> future = client.futureInvoke(request, codecType, timeout);
             response = (ESFResponse) future.get(timeout, TimeUnit.MILLISECONDS);
         } catch (InterruptedException e) {

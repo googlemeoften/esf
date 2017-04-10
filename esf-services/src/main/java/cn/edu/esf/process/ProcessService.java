@@ -26,5 +26,5 @@ public interface ProcessService {
      * @param metadata
      * @throws ESFException
      */
-    public void publis(ServiceMetadata metadata) throws ESFException;
+    public void publish(ServiceMetadata metadata) throws ESFException;
 }
