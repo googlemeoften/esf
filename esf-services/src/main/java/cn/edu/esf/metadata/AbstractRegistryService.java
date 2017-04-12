@@ -158,4 +158,8 @@ public abstract class AbstractRegistryService implements RegistryService {
     public ConcurrentSkipListSet<RegisterMeta> registerMetaSet() {
         return registerMetaSet;
     }
+
+    public Map<ServiceMeta, Pair<Long, List<RegisterMeta>>> getRegistries() {
+        return registries;
+    }
 }
