@@ -27,9 +27,7 @@ import cn.edu.esf.utils.UUIDGenerator;
  * @Date 2016/12/15
  */
 public class RpcRequest extends BaseRequest {
-    /**
-     * =================================
-     */
+
     private final static ProtocolHandler<? extends BaseRequest> protocolHandler =
             ProtocolFactory.instance.getServerHandler(RemotingConstants.PROCOCOL_VERSION_ESF_REMOTING);
     private final String targetInstance;

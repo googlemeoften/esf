@@ -18,9 +18,7 @@ import cn.edu.esf.server.ProtocolHandler;
  * @Date 2016/12/15
  */
 public class HeartBeatRequest extends BaseRequest {
-    /***
-     * ==================================
-     */
+
     private final static ProtocolHandler<? extends BaseRequest> protocolHandler =
             ProtocolFactory.instance.getServerHandler(RemotingConstants.PROCOCOL_VERSION_HEATBEAT);
 
