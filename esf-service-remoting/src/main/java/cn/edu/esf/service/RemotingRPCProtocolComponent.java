@@ -11,12 +11,14 @@ import cn.edu.esf.remoting.ProviderServer;
 import cn.edu.esf.remoting.RPCProtocolService;
 import cn.edu.esf.utils.ESFConstants;
 import cn.edu.esf.utils.ESFServiceContainer;
+import cn.edu.esf.utils.NetUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Description:
@@ -27,6 +29,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class RemotingRPCProtocolComponent implements RPCProtocolService {
     private static final Logger LOGGER = LoggerFactory.getLogger(RemotingRPCProtocolComponent.class);
 
+    private final AtomicBoolean isProviderStarted = new AtomicBoolean(false);
     private static final int RETRY_TIMES = 3;
     private final AddressService addressService = ESFServiceContainer.getInstance(AddressService.class);
     private final ConfigurationService configurationService = ESFServiceContainer.getInstance(ConfigurationService.class);
@@ -68,7 +71,7 @@ public class RemotingRPCProtocolComponent implements RPCProtocolService {
 
         //String secureKey = metadata.getSecureKey();
 
-        String targetURL = "localhost";
+        String targetURL = NetUtil.getLocalAddress();
 
 
         Object appResponse = null;
@@ -91,7 +94,34 @@ public class RemotingRPCProtocolComponent implements RPCProtocolService {
 
     @Override
     public void registerProvider(ServiceMetadata metadata) throws ESFException {
+        // 仅启动一次HSF SERVER
+        if (isProviderStarted.compareAndSet(false, true)) {
+            try {
+                providerServer.startHSFServer();
 
+                Runtime.getRuntime().addShutdownHook(new Thread() {
+                    public void run() {
+                        try {
+                            shutdownGracefully();
+                        } catch (Exception e) {
+                            LOGGER.warn("Exception happens during stop server:", e);
+                        }
+                    }
+                });
+            } catch (Exception e) {
+                throw new ESFException("启动ESF Server失败");
+            }
+        }
+
+        // 分配线程池
+        int corePoolSize = metadata.getCorePoolSize();
+        int maxPoolSize = metadata.getMaxPoolSize();
+        if (corePoolSize > 0 && maxPoolSize > 0 && maxPoolSize >= corePoolSize) {
+            providerServer.allocThreadPool(metadata.getUniqueName(), corePoolSize, maxPoolSize);
+        }
+
+        // 注册对象到HSF Server上
+        providerServer.addMetadata(metadata.getUniqueName(), metadata);
     }
 
     @Override
@@ -106,7 +136,8 @@ public class RemotingRPCProtocolComponent implements RPCProtocolService {
         String invokeType = "SYNC";
         InvokeService invokeService = invokeServices.get(invokeType);
 
-        RemotingURL targetUrl = new RemotingURL("127.0.0.1", "ESF", "127.0.0.1", 8080, null, null);
+        RemotingURL targetUrl = new RemotingURL(NetUtil.getLocalAddress(), "ESF", NetUtil.getLocalAddress(),
+                configurationService.getESFServerPort(), null, null);
 
         return invokeService.invoke(request, metadata, targetUrl, (byte) 1, 4000);
     }
@@ -126,5 +157,18 @@ public class RemotingRPCProtocolComponent implements RPCProtocolService {
             paramSig[x] = args[x].getName();
         }
         return paramSig;
+    }
+
+    public void shutdownGracefully() throws Exception {
+//        for (ProviderServiceModel serviceModel : ApplicationModel.instance().allProvidedServices()) {
+//            serviceModel.getMetadata().fireMetadataBeforeChanged();
+//            metadataService.unregister(serviceModel.getMetadata());
+//            // HSFServiceContainer.getInstance(MetaSupportService.class).unregister(
+//            // serviceModel.getMetadata());
+//        }
+//
+//        Thread.sleep(ESFServiceContainer.getInstance(ConfigurationService.class)
+//                .getshutdownHookWaitTime());
+        providerServer.stopHSFServer();
     }
 }
