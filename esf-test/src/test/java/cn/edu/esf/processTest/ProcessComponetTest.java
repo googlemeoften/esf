@@ -21,10 +21,12 @@ public class ProcessComponetTest {
         for (int i = 0; i < 10; i++) {
             ServiceMetadata metadata = new ServiceMetadata(false);
 
-            Class clazz = HelloServiceImpl.class;
+
+            Class clazz = HelloService.class;
             String targetInstance = clazz.getName();
             metadata.setInterfaceName(targetInstance);
             metadata.setIfClazz(HelloService.class);
+            metadata.setTarget(new HelloServiceImpl());
             metadata.initUniqueName();
 
             HelloService obj = (HelloService) pc.consume(metadata);
