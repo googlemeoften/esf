@@ -66,8 +66,8 @@ public class NettyServer implements Server {
             ChannelFuture future = bootstrap.bind(new InetSocketAddress(bindHost, listenPort));
             future.await();
             if (future.isSuccess()) {
-                System.out.println("Server is start,listen at: " + listenPort);
-                //LOGGER.warn("Server is start,listen at: " + listenPort);
+//                System.out.println("Server is start,listen at: " + listenPort);
+                LOGGER.info("Server is start,listen at: " + listenPort);
                 return;
             } else {
                 tryBind--;
