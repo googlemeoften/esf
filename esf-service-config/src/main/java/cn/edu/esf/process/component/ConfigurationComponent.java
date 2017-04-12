@@ -3,6 +3,7 @@ package cn.edu.esf.process.component;/**
  */
 
 import cn.edu.esf.config.ConfigurationService;
+import cn.edu.esf.utils.NetUtil;
 
 /**
  * Description:
@@ -58,7 +59,7 @@ public class ConfigurationComponent implements ConfigurationService {
 
     @Override
     public String getBindAddress() {
-        return null;
+        return NetUtil.getLocalAddress();
     }
 
     @Override
@@ -69,6 +70,11 @@ public class ConfigurationComponent implements ConfigurationService {
     @Override
     public int getThreadPoolQueueSize() {
         return 0;
+    }
+
+    @Override
+    public String getRegistryAddress() {
+        return null;
     }
 
 }
