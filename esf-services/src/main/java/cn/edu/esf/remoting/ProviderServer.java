@@ -21,6 +21,6 @@ public interface ProviderServer {
 
     void stopHSFServer() throws ESFException;
 
-    public void refuseConnect();
+   // public void refuseConnect();
 
 }
