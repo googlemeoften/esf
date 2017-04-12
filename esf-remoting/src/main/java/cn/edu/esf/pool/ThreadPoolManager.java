@@ -1,5 +1,6 @@
 package cn.edu.esf.pool;
 
+import cn.edu.esf.exception.ESFException;
 import cn.edu.esf.thread.NamedThreadFactory;
 import cn.edu.esf.thread.ThreadNameSpace;
 import org.slf4j.Logger;
@@ -27,20 +28,20 @@ public class ThreadPoolManager {
                 TimeUnit.SECONDS, taskQueue, factory, handler);
     }
 
-    public void allocThreadPool(String serviceName, int corePoolSize, int maximumPoolSize) throws Exception {
+    public void allocThreadPool(String serviceName, int corePoolSize, int maximumPoolSize) throws ESFException {
         if (executors.containsKey(serviceName)) {
-            throw new Exception("ThreadManager has alloc threadP" +
+            throw new ESFException("ThreadManager has alloc threadP" +
                     "ool to " + serviceName);
         }
 
         if (defaultPoolExecutor == null || defaultPoolExecutor.isShutdown()) {
-            throw new Exception("ThreadManeger Cann't alloc threadPool to " + serviceName);
+            throw new ESFException("ThreadManeger Cann't alloc threadPool to " + serviceName);
         }
 
         int blance = defaultPoolExecutor.getMaximumPoolSize();
 
         if (blance < maximumPoolSize) {
-            throw new Exception("ThreadManeger failed alloc thread to  " + serviceName
+            throw new ESFException("ThreadManeger failed alloc thread to  " + serviceName
                     + ": blance:" + blance + " maximumPoolSize:" + maximumPoolSize
             );
         }
@@ -51,7 +52,7 @@ public class ThreadPoolManager {
                     new SynchronousQueue<Runnable>(), threadFactory, handler);
             executors.put(serviceName, executor);
         } catch (Exception e) {
-            throw new Exception("ThreadManager alloc failed to " + serviceName);
+            throw new ESFException("ThreadManager alloc failed to " + serviceName);
         }
 
         int newBlance = blance - maximumPoolSize;
