@@ -5,6 +5,7 @@ package cn.edu.esf.server;/**
 import cn.edu.esf.Connection;
 import cn.edu.esf.domain.ESFRequest;
 import cn.edu.esf.domain.ESFResponse;
+import cn.edu.esf.model.matedata.ServiceMetadataManager;
 import cn.edu.esf.moniter.MonitorService;
 import cn.edu.esf.pool.ThreadPoolManager;
 import cn.edu.esf.server.output.ServerOutput;
@@ -119,9 +120,9 @@ public class ProviderProcessor implements RpcRequestProcessor {
 
         Object result = null;
         try {
-            Class clazz = Class.forName(serviceUniqueName);
-
-            Object instance = clazz.newInstance();
+            //Class clazz = Class.forName(serviceUniqueName);
+            Object target = ServiceMetadataManager.getServiceMetaData(serviceUniqueName).getTarget();
+            Class clazz = target.getClass();
 
             Class[] argTypesClass = new Class[args.length];
             for (int i = 0; i < args.length; i++) {
@@ -129,15 +130,13 @@ public class ProviderProcessor implements RpcRequestProcessor {
             }
 
             Method method = clazz.getMethod(methodName, argTypesClass);
-            result = method.invoke(instance, args);
+            result = method.invoke(target, args);
 
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (InvocationTargetException e) {
             e.printStackTrace();
