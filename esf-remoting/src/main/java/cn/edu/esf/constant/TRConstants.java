@@ -6,6 +6,5 @@ package cn.edu.esf.constant;
  */
 public class TRConstants {
     public static final String CONNECT_TIMEOUT_KEY = "Connect-Timeout";
-
-
+    public static final String PREFER_SERIALIZIER = "Serialize-Type";
 }
