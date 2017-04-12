@@ -57,7 +57,7 @@ public class ESFApiConsumerBean {
         metadata.setIfClazz(interfaceClass);
         // 加入到manager里边
         //ServiceMetadataManager.allServiceMetadata.put(metadata.getUniqueName(), metadata);
-
+        metadata.initUniqueName();
         ProcessService processService = ESFServiceContainer.getInstance(ProcessService.class);
 
         try {
@@ -111,5 +111,13 @@ public class ESFApiConsumerBean {
 
     public void setInvokeContextThreadLocal(ThreadLocal<Serializable> invokeContext) {
         metadata.setInvokeContext(invokeContext);
+    }
+
+    public ServiceMetadata getMetadata() {
+        return metadata;
+    }
+
+    public AtomicBoolean getInited() {
+        return inited;
     }
 }
