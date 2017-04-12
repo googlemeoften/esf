@@ -44,4 +44,6 @@ public interface ConfigurationService {
 
     public int getThreadPoolQueueSize();
 
+    public String getRegistryAddress();
+
 }
