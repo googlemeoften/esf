@@ -22,4 +22,6 @@ public class ESFConstants {
      * 调用方式标识字符串
      */
     public static final String INVOKE_TYPE_CALL_BACK = "CALLBACK";
+
+    public static final String ESF_LOG_PATH = "ESF.LOG.PATH";
 }
