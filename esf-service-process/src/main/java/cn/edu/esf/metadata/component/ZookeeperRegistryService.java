@@ -3,6 +3,7 @@ package cn.edu.esf.metadata.component;
 import cn.edu.esf.metadata.AbstractRegistryService;
 import cn.edu.esf.metadata.RegisterMeta;
 import cn.edu.esf.utils.NetUtil;
+import cn.edu.esf.utils.Pair;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.framework.api.BackgroundCallback;
@@ -279,6 +280,25 @@ public class ZookeeperRegistryService extends AbstractRegistryService {
         }
 
         configClient.close();
+    }
+
+    public List<RegisterMeta> getAddressByService(ServiceMeta serviceMeta) {
+        Pair<Long, List<RegisterMeta>> pairRegistMeta = this.getRegistries().get(serviceMeta);
+        List<RegisterMeta> registerMetaList = new ArrayList<>();
+        RegisterMeta meta = null;
+        for (RegisterMeta registerMeta : pairRegistMeta.getValue()) {
+            meta = new RegisterMeta();
+            meta.setHost(registerMeta.getHost());
+            meta.setPort(registerMeta.getPort());
+            meta.setGroup(registerMeta.getGroup());
+            meta.setVersion(registerMeta.getVersion());
+            meta.setServiceProviderName(registerMeta.getServiceProviderName());
+            meta.setWeight(registerMeta.getWeight());
+            meta.setConnCount(registerMeta.getConnCount());
+            registerMetaList.add(meta);
+        }
+
+        return registerMetaList;
     }
 
 }
